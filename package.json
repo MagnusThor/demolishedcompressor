@@ -1,12 +1,33 @@
 {
   "name": "demolishedcompressor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "demolishedcompressor pack's a .js file into a PNG image with an HTML payload. When opened in a browser, the HTML extracts and executes the javascript.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Magnus Thor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MagnusThor/demolishedcompressor.git"
+  },
+  "author": {
+    "name": "Magnus Thor",
+    "email": "magnus.thor74@gmail.com"
+  },
+  "keywords": [
+    "javascript",
+    "compression",
+    "typescript",
+    "demoscene",
+    "png",
+    "pnghtml"
+  ],
+  "contributors": [
+    {
+      "name": "Ricky Davies",
+      "email": "rdavies@zen.co.uk"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "@types/crc": "^3.4.0",
