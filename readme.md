@@ -1,6 +1,6 @@
 # demolishedCompressor
 
-demolishedcompressor pack's a .js file into a PNG image with an HTML payload when saved with an .html extension and opened in a browser, the HTML extracts and executes.
+demolishedcompressor pack's a .js file into a PNG image with an HTML payload. When opened in a browser, the HTML extracts and executes the javascript.
 
 ## Install
 
