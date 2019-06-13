@@ -1,0 +1,20 @@
+{
+  "name": "demolishedcompressor",
+  "version": "1.0.0",
+  "description": "demolishedcompressor pack's a .js file into a PNG image with an HTML payload when saved with an .html extension and opened in a browser, the HTML extracts and executes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Magnus Thor",
+  "license": "MIT",
+  "dependencies": {
+    "@types/crc": "^3.4.0",
+    "crc": "^3.8.0",
+    "fs": "0.0.1-security",
+    "zlib": "^1.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.7"
+  }
+}
