@@ -9,7 +9,7 @@ demolishedcompressor pack's a .js file into a PNG image with an HTML payload. Wh
 ## Example
 
 
-     import { Compressor } from './index';
+     import { Compressor } from 'demolishedcompressor';
     // packs foo.js into output.png.html
     
     const html = 'put html here'
