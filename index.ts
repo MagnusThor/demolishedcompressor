@@ -1,12 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Zlib from 'zlib';
-//let crc = require('crc').crc32;
 import {crc32}  from 'crc';
 
 export class Compressor {
 
-    static async Pngify(src: string,dest:string,preHTML?:string) {
+    static Pngify(src: string,dest:string,preHTML?:string):void {
 
         if(!preHTML) preHTML = '';
 
@@ -38,10 +37,13 @@ export class Compressor {
 
         fs.readFile(path.join(__dirname, src), (err, payload) => {
 
+
+            console.log("File loaded (name,bytes):", src,payload.byteLength);
+
+
             while (payload.length % 3) {
                 payload = Buffer.concat([payload, new Buffer([0])]);
             }
-
             let width = Math.ceil(Math.sqrt(payload.length / 3));
             let height = width;
             let padding = width * height - payload.length / 3;
@@ -49,8 +51,6 @@ export class Compressor {
             while (padding-- > 0) {
                 payload = Buffer.concat([payload, new Buffer([0, 0, 0])]);
             }
-
-
             let fileSignature = new Buffer('\x89\x50\x4e\x47\x0d\x0a\x1a\x0a', 'binary');
             let IHDRChunk = chunk('IHDR', Buffer.concat([
                 getBytes(width, 4),
@@ -64,6 +64,7 @@ export class Compressor {
 
 
             let html = `
+            ${preHTML}
             <script>
             function z(){
                 x=document.querySelector("#c").getContext("2d");
@@ -81,7 +82,7 @@ export class Compressor {
             l(0);            
             }
             </script>
-            ${preHTML}<canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--
+            <canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--
             `;
             
 
@@ -94,7 +95,7 @@ export class Compressor {
                 return Buffer.concat([new Buffer([0]), scanline]);
             }));
 
-
+            
             let pngify = new Promise((resolve, reject) => {
                 Zlib.deflate(scanlinesBuffer, (err, buffer) => {
                     if (err) reject();
@@ -119,7 +120,7 @@ export class Compressor {
                     if (err) {
                          console.log(err);
                     }
-                    console.log("File saved successfully!");
+                    console.log("File created successfully!",a.byteLength);
                 });
 
             });
