@@ -75,7 +75,6 @@ class Compressor {
                     else {
                         s = buf.join("").replace(/\\0/g, " ");                     
                         (1, eval)(s); 
-
                 }
             }
             l(0);            

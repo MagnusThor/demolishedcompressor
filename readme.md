@@ -18,4 +18,8 @@ demolishedcompressor pack's a .js file into a PNG image with an HTML payload. Wh
     Compressor.Pngify("foo.js","output.png.html",html);
 
 
+## Live example
+
+https://magnusthor.github.io/demolishedcompressor/output.png.html
+
 
