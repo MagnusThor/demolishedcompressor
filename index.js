@@ -74,7 +74,8 @@ class Compressor {
                     if (offset < d.length) { setTimeout(function () { l(offset + stride); }, 0); }
                     else {
                         s = buf.join("").replace(/\\0/g, " ");                     
-                        (1, eval)(s);                
+                        (1, eval)(s); 
+
                 }
             }
             l(0);            
