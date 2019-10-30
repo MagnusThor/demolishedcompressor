@@ -293,7 +293,7 @@ generator = Synth.G(dsp, 44100, 128, 64);
   P.I(q("canvas"), "layout(location= 0) in vec2 pos; out vec4 fragColor;void main(){gl_Position=vec4(pos.xy,0.,1.0);}", 
   s, innerWidth, innerHeight,{}, 
   function() {
-            d("#w").addEventListener("click", function() {
+            q("#w").addEventListener("click", function() {
                 Synth.P(generator)
             })
         
