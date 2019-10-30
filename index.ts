@@ -7,6 +7,8 @@ export class Compressor {
 
     static Pngify(src: string,dest:string,preHTML?:string):void {
 
+        console.clear();
+
         if(!preHTML) preHTML = '';
 
         const getBytes = (number: number, bytes: any) => {
@@ -66,21 +68,7 @@ export class Compressor {
             let html = `
             ${preHTML}
             <script>
-            function z(){
-                x=document.querySelector("#c").getContext("2d");
-                x.drawImage(document.querySelector("img"),0,0);
-                d=x.getImageData(0,0,${width},${height}).data;
-                var buf = []; var stride = 1000000; 
-                function l(offset) {
-                   for (i = offset; i < offset + stride && i < d.length; i += 4) { buf.push(String.fromCharCode(d[i])); buf.push(String.fromCharCode(d[i + 1])); buf.push(String.fromCharCode(d[i + 2])); }
-                    if (offset < d.length) { setTimeout(function () { l(offset + stride); }, 0); }
-                    else {
-                        s = buf.join("").replace(/\\0/g, " ");                     
-                        (1, eval)(s); 
-                }
-            }
-            l(0);            
-            }
+            z=function(){c=String.fromCharCode;q=document.querySelector.bind(document);x=q("#c").getContext("2d");x.drawImage(q("img"),0,0);d=x.getImageData(0,0,${width},${height}).data;b=[];s=1E6;p=b.push.bind(b);l=function(a){for(i=a;i<a+s&&i<d.length;i+=4)p(c(d[i])),p(c(d[i+1])),p(c(d[i+2]));a<d.length?setTimeout(function(){l(a+s)},0):(s=b.join("").replace(/\\0/g," "),(0,eval)(s))};l(0)};
             </script>
             <canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--
             `;
@@ -120,7 +108,8 @@ export class Compressor {
                     if (err) {
                          console.log(err);
                     }
-                    console.log("File created successfully!",a.byteLength);
+                    let msg = `File created successfully, ${payload.byteLength} resulted in ${a.byteLength}, ratio ${(a.byteLength /payload.byteLength) * 100 }%`;
+                    console.log(msg);
                 });
 
             });
