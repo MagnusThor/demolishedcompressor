@@ -86,3 +86,9 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
+
+# temp & local junk
+
+demo
+

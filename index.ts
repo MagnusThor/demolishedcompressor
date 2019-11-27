@@ -37,9 +37,9 @@ export class Compressor {
             return chunks;
         }
 
-        fs.readFile(path.join(__dirname, src), (err, payload) => {
+        fs.readFile(path.join(process.cwd(), src), (err, payload) => {
 
-            console.log("File loaded (name,bytes):", src,payload.byteLength);
+            console.log("File loaded (name,bytes):", path.join(process.cwd(), src),payload.byteLength);
 
             while (payload.length % 3) {
                 payload = Buffer.concat([payload, new Buffer([0])]);
