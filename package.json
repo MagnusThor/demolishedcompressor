@@ -1,10 +1,12 @@
 {
   "name": "demolishedcompressor",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "demolishedcompressor pack's a javascript file into a PNG image with an HTML payload. When opened in a browser, the HTML extracts and executes the javascript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tiny": "node tiny-efflux/tiny-compress.js",
+    "example":"node example/example.js"
   },
   "repository": {
     "type": "git",
