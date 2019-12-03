@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <title>tiny-efflux experiment</title>
 </head>
@@ -6,7 +7,7 @@
 <body>
   <h1>tiny-efflux experiment</h1>
   <div>
-  <button>Load & play</button>
+    <button>Load & play</button>
 
   </div>
   <div id="result">
@@ -15,50 +16,20 @@
 
 </body>
 
-<script src="player/tiny.js"></script>
+<script src="lib/tiny.js"></script>
+<script src="../src/unpack.js"></script>
 <script>
-
-
-  function unpack(image, cb) {
-    var c = document.createElement("canvas");
-    c.width = image.width, c.height = image.height;
-    x = c.getContext("2d");
-    x.drawImage(image, 0, 0);
-    d = x.getImageData(0, 0, image.width, image.height).data;
-    var buf = []; var stride = 10000;
-    function l(offset) {
-      for (i = offset; i < offset + stride && i < d.length; i += 4) {
-        if (d[i] + d[i + 1] + d[i + 2] > 0) {
-          buf.push(String.fromCharCode(d[i]));
-          buf.push(String.fromCharCode(d[i + 1]));
-          buf.push(String.fromCharCode(d[i + 2]));
-        }
-      }
-      if (offset < d.length) {
-        l(offset + stride);
-      }
-      else {
-        cb(JSON.parse(buf.join("")));
-      }
-    }
-    l(0);
-  }
-
-  let btn = document.querySelector("button");
-
-  btn.addEventListener("click", function () {
-    let loadSong = new Image();
-    loadSong.src = "tiny.png";
-    loadSong.onload = () => {
-      document.querySelector("#result").appendChild(loadSong);
-      unpack(loadSong, function (xkt) {
-        eTiny.l(xkt.data);
+  document.addEventListener("DOMContentLoaded", () => {
+    let btn = document.querySelector("button");
+    btn.addEventListener("click", function () {
+      // get an new instance of unpacker, unpack and play song 
+      U.I().F("tiny.png", function (a) {
+        let xkt  = JSON.parse(a);  // 
+        eTiny.l(JSON.parse(xkt.data));
         eTiny.p();
       });
-    }
-    btn.disabled = true;
+    });
   });
-
 </script>
 
 </html>
