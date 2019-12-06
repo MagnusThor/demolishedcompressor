@@ -8,7 +8,6 @@ export class Compressor {
     static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): void {
 
 
-
         if (!preHTML) preHTML = '';
 
         const getBytes = (number: number, bytes: any) => {
@@ -41,10 +40,14 @@ export class Compressor {
         
         fs.readFile(src, (err, payload) => {
 
+            if (err) {
+                console.log(err);
+            }
+            
             console.log("File loaded (name,bytes):", src, payload.byteLength);
 
             while (payload.length % 3) {
-                payload = Buffer.concat([payload, new Buffer([0,0,0])]);
+                payload = Buffer.concat([payload, new Buffer([0])]);
             }
             let width = Math.ceil(Math.sqrt(payload.length / 3));
             let height = width;

@@ -44,9 +44,12 @@ var Compressor = (function () {
         };
         src = path.join(process.cwd(), src);
         fs.readFile(src, function (err, payload) {
+            if (err) {
+                console.log(err);
+            }
             console.log("File loaded (name,bytes):", src, payload.byteLength);
             while (payload.length % 3) {
-                payload = Buffer.concat([payload, new Buffer([0, 0, 0])]);
+                payload = Buffer.concat([payload, new Buffer([0])]);
             }
             var width = Math.ceil(Math.sqrt(payload.length / 3));
             var height = width;
