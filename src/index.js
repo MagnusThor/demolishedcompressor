@@ -14,6 +14,31 @@ var crc_1 = require("crc");
 var Compressor = (function () {
     function Compressor() {
     }
+    Compressor.Mjolnir = function (src, dest, map) {
+        return new Promise(function (resolve, reject) {
+            fs.readFile(path.join(process.cwd(), map), function (err, hash) {
+                var o = JSON.parse(hash.toString());
+                fs.readFile(path.join(process.cwd(), src), function (err, payload) {
+                    if (err)
+                        reject(err);
+                    var source = payload.toString();
+                    Object.keys(o).forEach(function (key) {
+                        var s = "." + o[key] + "(";
+                        if (source.includes(s)) {
+                            console.log("Mjolnor replacing", o[key] + " with " + key);
+                            source = source.split(s).join("." + key + ("("));
+                        }
+                    });
+                    fs.writeFile(path.join(process.cwd(), dest), source, function (err) {
+                        if (err)
+                            reject(err);
+                        console.log(dest, " is now completed, see ", dest, "resulted in ", payload.length - source.length, "bytes less (", (100 - (source.length / payload.length) * 100).toFixed(2), "%)");
+                        resolve();
+                    });
+                });
+            });
+        });
+    };
     Compressor.Pngify = function (src, dest, preHTML, useScript) {
         if (!preHTML)
             preHTML = '';
@@ -101,7 +126,7 @@ var Compressor = (function () {
                     if (err) {
                         console.log(err);
                     }
-                    var msg = "File created successfully, " + payload.byteLength + " resulted in " + a.byteLength + ", ratio " + (payload.byteLength / a.byteLength) * 100 + "%";
+                    var msg = "File created successfully, " + payload.byteLength + " resulted in " + a.byteLength + ", ratio " + ((payload.byteLength / a.byteLength) * 100).toFixed(2) + "%";
                     console.log(msg);
                 });
             });

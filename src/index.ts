@@ -5,8 +5,52 @@ import { crc32 } from 'crc';
 
 export class Compressor {
 
-    static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): void {
+    
+    static Mjolnir(src:string,dest:string,map:any):Promise<any>{
 
+        
+        return new Promise((resolve, reject) => {
+
+       fs.readFile(path.join(process.cwd(), map), (err,hash:any) => {
+        var o = JSON.parse(hash.toString())
+        fs.readFile(path.join(process.cwd(), src), (err, payload) => {
+            if(err) reject(err);
+            var source = payload.toString();
+            Object.keys(o).forEach ( (key:string) => {
+                var s = "." +o[key]+"(";
+                if(source.includes(s)){
+                    console.log("Mjolnor replacing" ,o[key] + " with " + key);
+                    source = source.split(s).join("."+  key +("(")) ;
+                }               
+            });
+            fs.writeFile(path.join(process.cwd(), dest), source, function (err) {   
+                if(err) reject(err);            
+                console.log(dest," is now completed, see ",dest , "resulted in " ,payload.length - source.length ,"bytes less (" ,
+                (100-(source.length / payload.length)*100).toFixed(2) , "%)"
+                );
+                resolve();
+            });
+        });
+
+        });
+
+        });
+
+
+    }
+    
+
+    /**
+     * Pngify ( compress ) a javascript
+     *
+     * @static
+     * @param {string} src
+     * @param {string} dest
+     * @param {string} [preHTML]
+     * @param {boolean} [useScript]
+     * @memberof Compressor
+     */
+    static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): void {
 
         if (!preHTML) preHTML = '';
 
@@ -101,7 +145,7 @@ export class Compressor {
                 });
             });
 
-            dest = path.join(process.cwd(), dest)
+            dest = path.join(process.cwd(), dest);
 
             pngify.then((a: any) => {
 
@@ -109,7 +153,7 @@ export class Compressor {
                     if (err) {
                         console.log(err);
                     }
-                    let msg = `File created successfully, ${payload.byteLength} resulted in ${a.byteLength}, ratio ${(payload.byteLength / a.byteLength) * 100}%`;
+                    let msg = `File created successfully, ${payload.byteLength} resulted in ${a.byteLength}, ratio ${((payload.byteLength / a.byteLength) * 100).toFixed(2)}%`;
                     console.log(msg);
                 });
 
@@ -121,4 +165,5 @@ export class Compressor {
     }
 
 }
+
 

@@ -23,7 +23,9 @@ var U = (function () {
                 l(o + s);
             }
             else {
-                cb(a.join(""));
+                cb(a.filter(function (a) {
+                    return a.charCodeAt(0) > 0;
+                }).join(""));
             }
         };
         l(0);

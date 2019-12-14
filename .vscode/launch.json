@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/example/example.js",
+            "program": "${workspaceFolder}/example/compress-hammer.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
