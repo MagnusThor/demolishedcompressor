@@ -14,13 +14,14 @@ By using the external/custom unpacker you can pack 1-n resources and take advant
 
 ### Compress/Pack ( Pngify )    
 
-    Pngify(src:string,outputfile:string,html:string,useDefaultUnpacker:boolean)
+    Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): Promise<any>
 
 ### TypeScript definition 
 
-    export declare class Compressor {
-    static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): void;
-    }
+    static Mjolnir(src: string, dest: string, map: any): Promise<any>;
+    static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): Promise<any>;
+}
+
 
 
 
@@ -92,7 +93,8 @@ This example uses demolishedPlayer (WebGL & GLSL Shader rendering engine), demol
 
 Unpacked size 12173 bytes, packed result is 6235 without any major minification of code.
 
-https://magnusthor.github.io/demolishedcompressor/example/output.png.html
+https://magnusthor.github.io/demolishedcompressor/example/builds/demo.png.html
+
 
 Note , Click the canvas to start audio.
 
@@ -105,5 +107,10 @@ This example packs a song created using Efflux ( https://www.igorski.nl/applicat
 https://magnusthor.github.io/demolishedcompressor/tiny-efflux/index.html
 
 
+### Example 3
+
+TBD
+
+https://magnusthor.github.io/demolishedcompressor/example/builds/foo-mjolnir.png.html
 
 

@@ -1,6 +1,6 @@
 {
   "name": "demolishedcompressor",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "demolishedcompressor pack's a javascript file into a PNG image with an HTML payload. When opened in a browser, the HTML extracts and executes the javascript.",
   "main": "index.js",
   "scripts": {

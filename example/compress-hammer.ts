@@ -31,11 +31,17 @@ var gl = w((document.createElement("canvas")).getContext("webgl2"),o);
   adds decompressor, and executes. 
 
 */
+
 Compressor.Mjolnir("/example/builds/foo.js", "/example/builds/foo-mjolnir.js", "/example/mjolnir-webgl.json").then(() => {
 
   let html = `<canvas style="width:100%;height:100vh;left:0;position:absolute" id=w width=640 height=360/>
   <style>body{margin:0;background:0}</style>`;
-  Compressor.Pngify("/example/builds/foo-mjolnir.min.js", "/example/builds/foo-mjolnir.png.html", html, true);
+
+  Compressor.Pngify("/example/builds/foo-mjolnir.min.js", "/example/builds/foo-mjolnir.png.html", html, true).catch(err => {
+    console.log(err);
+  }).then(() => {
+
+  });
 
 
 }).catch((err) => {
