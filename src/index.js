@@ -39,7 +39,7 @@ var Compressor = (function () {
             });
         });
     };
-    Compressor.Pngify = function (src, dest, preHTML, useScript) {
+    Compressor.Pngify = function (src, dest, preHTML, customScript) {
         return new Promise(function (resolve, reject) {
             if (!preHTML)
                 preHTML = '';
@@ -94,8 +94,12 @@ var Compressor = (function () {
                     getBytes(0, 1)
                 ]));
                 var script = "";
-                if (useScript)
+                if (!customScript) {
                     script = "<script>z=function(){c=String.fromCharCode;q=document.querySelector.bind(document);x=q(\"#c\").getContext(\"2d\");x.drawImage(q(\"img\"),0,0);d=x.getImageData(0,0," + width + "," + height + ").data;b=[];s=1E6;p=b.push.bind(b);l=function(a){for(i=a;i<a+s&&i<d.length;i+=4)p(c(d[i])),p(c(d[i+1])),p(c(d[i+2]));a<d.length?setTimeout(function(){l(a+s)},0):(s=b.join(\"\").replace(/\\0/g,\" \"),(0,eval)(s))};l(0)};</script><canvas id=\"c\" height=\"" + height + "\" width=\"" + width + "\"></canvas><img src=# onload=z()><!--";
+                }
+                else {
+                    script = "<script>" + customScript + "</script><canvas id=\"c\" height=\"" + height + "\" width=\"" + width + "\"></canvas><img src=# onload=z()><!--";
+                }
                 var html = "" + preHTML + script;
                 var htMlChunk = chunk('htMl', new Buffer(html));
                 var IENDChunk = chunk('IEND', new Buffer(''));
@@ -127,7 +131,7 @@ var Compressor = (function () {
                         if (err) {
                             console.log(err);
                         }
-                        var msg = "File created successfully, " + payload.byteLength + " resulted in " + a.byteLength + ", ratio " + ((payload.byteLength / a.byteLength) * 100).toFixed(2) + "%";
+                        var msg = "File created successfully " + dest + ", " + payload.byteLength + " resulted in " + a.byteLength + ", ratio " + ((payload.byteLength / a.byteLength) * 100).toFixed(2) + "%";
                         console.log(msg);
                         resolve();
                     });

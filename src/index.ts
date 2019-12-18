@@ -6,11 +6,18 @@ import { crc32 } from 'crc';
 export class Compressor {
 
 
+    /**
+     *
+     *
+     * @static
+     * @param {string} src
+     * @param {string} dest
+     * @param {*} map
+     * @returns {Promise<any>}
+     * @memberof Compressor
+     */
     static Mjolnir(src: string, dest: string, map: any): Promise<any> {
-
-
         return new Promise((resolve, reject) => {
-
             fs.readFile(path.join(process.cwd(), map), (err, hash: any) => {
                 var o = JSON.parse(hash.toString())
                 fs.readFile(path.join(process.cwd(), src), (err, payload) => {
@@ -38,8 +45,6 @@ export class Compressor {
 
 
     }
-
-
     /**
      * Pngify ( compress ) a javascript
      *
@@ -47,17 +52,12 @@ export class Compressor {
      * @param {string} src
      * @param {string} dest
      * @param {string} [preHTML]
-     * @param {boolean} [useScript]
+     * @param {boolean} [customScript]
      * @memberof Compressor
      */
-    static Pngify(src: string, dest: string, preHTML?: string, useScript?: boolean): Promise<any> {
-
-
+    static Pngify(src: string, dest: string, preHTML?: string, customScript?: string): Promise<any> {
         return new Promise((resolve, reject) => {
-
-
             if (!preHTML) preHTML = '';
-
             const getBytes = (number: number, bytes: any) => {
                 bytes = bytes || 4;
                 let result: any[] | never[] | number[] | Array<number> = [];
@@ -117,13 +117,16 @@ export class Compressor {
 
                 let script: string = "";
 
-                if (useScript) script = `<script>z=function(){c=String.fromCharCode;q=document.querySelector.bind(document);x=q("#c").getContext("2d");x.drawImage(q("img"),0,0);d=x.getImageData(0,0,${width},${height}).data;b=[];s=1E6;p=b.push.bind(b);l=function(a){for(i=a;i<a+s&&i<d.length;i+=4)p(c(d[i])),p(c(d[i+1])),p(c(d[i+2]));a<d.length?setTimeout(function(){l(a+s)},0):(s=b.join("").replace(/\\0/g," "),(0,eval)(s))};l(0)};</script><canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--`;
-
+                if (!customScript){                
+                    script = `<script>z=function(){c=String.fromCharCode;q=document.querySelector.bind(document);x=q("#c").getContext("2d");x.drawImage(q("img"),0,0);d=x.getImageData(0,0,${width},${height}).data;b=[];s=1E6;p=b.push.bind(b);l=function(a){for(i=a;i<a+s&&i<d.length;i+=4)p(c(d[i])),p(c(d[i+1])),p(c(d[i+2]));a<d.length?setTimeout(function(){l(a+s)},0):(s=b.join("").replace(/\\0/g," "),(0,eval)(s))};l(0)};</script><canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--`;
+                }else{
+                    script = `<script>${customScript}</script><canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--`;
+                   
+                }
                 let html = `${preHTML}${script}`;
 
                 let htMlChunk = chunk('htMl', new Buffer(html));
                 let IENDChunk = chunk('IEND', new Buffer(''));
-
 
                 let scanlines = bufferChunk(payload, width * 3);
                 let scanlinesBuffer = Buffer.concat(scanlines.map(function (scanline) {
@@ -157,7 +160,7 @@ export class Compressor {
                         if (err) {
                             console.log(err);
                         }
-                        let msg = `File created successfully, ${payload.byteLength} resulted in ${a.byteLength}, ratio ${((payload.byteLength / a.byteLength) * 100).toFixed(2)}%`;
+                        let msg = `File created successfully ${dest}, ${payload.byteLength} resulted in ${a.byteLength}, ratio ${((payload.byteLength / a.byteLength) * 100).toFixed(2)}%`;
                         console.log(msg);
                         resolve();
                     });
