@@ -1,4 +1,4 @@
-import { Compressor } from '../src/index';
+import { Compressor } from "../src/Compressor";
 
 // create a hash (map) of the methods tp replace
 // this is just to build the hash (map) of abbrevations

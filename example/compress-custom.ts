@@ -1,4 +1,4 @@
-import { Compressor } from '../index';
+import { Compressor } from "../src/Compressor";
 
 let html = `<style>body{margin:0;background:#000};</style><div id="p" style="right:50%;bottom:50%;transform:translate(50%,50%);position:absolute;z-index:2;height:40px;background:#fff"></div><canvas style="width:100%;height:100vh;left:0;position:absolute;z-index:1" id=w width=640 height=360/>`;
 

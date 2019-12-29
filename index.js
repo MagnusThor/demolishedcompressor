@@ -1,6 +1,6 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./src/"));
+var Compressor_1 = require("./src/Compressor");
+exports.Compressor = Compressor_1.Compressor;
+var CompressorFromString_1 = require("./src/CompressorFromString");
+exports.CompressString = CompressorFromString_1.CompressString;
