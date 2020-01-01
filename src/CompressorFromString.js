@@ -24,7 +24,7 @@ var CompressString = (function (_super) {
         return new Promise(function (resolve, reject) {
             var buffer = new Buffer(src);
             _this.Compress(buffer, preHTML, customScript).then(function (result) {
-                resolve(result.toString());
+                resolve(result);
             });
         }).catch(function (err) { return console.log(err); });
     };
