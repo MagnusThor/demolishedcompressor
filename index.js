@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CompressString = exports.Compressor = void 0;
 var Compressor_1 = require("./src/Compressor");
-exports.Compressor = Compressor_1.Compressor;
+Object.defineProperty(exports, "Compressor", { enumerable: true, get: function () { return Compressor_1.Compressor; } });
 var CompressorFromString_1 = require("./src/CompressorFromString");
-exports.CompressString = CompressorFromString_1.CompressString;
+Object.defineProperty(exports, "CompressString", { enumerable: true, get: function () { return CompressorFromString_1.CompressString; } });

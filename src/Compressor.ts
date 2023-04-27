@@ -13,13 +13,13 @@ export class Compressor extends CompressorBase {
      * @returns {Promise<any>}
      * @memberof Compressor
      */
-    static Mjolnir(src: string, dest: string, map: any): Promise<any> {
+    static Mjolnir(src: string, dest: string, map: any): Promise<boolean> {
         return new Promise((resolve, reject) => {
             fs.readFile(path.join(process.cwd(), map), (err, hash: any) => {
                 var o = JSON.parse(hash.toString());
                 fs.readFile(path.join(process.cwd(), src), (err, payload) => {
                     if (err)
-                        reject(err);
+                        reject(false);
                     var source = payload.toString();
                     Object.keys(o).forEach((key: string) => {
                         var s = "." + o[key] + "(";
@@ -32,7 +32,7 @@ export class Compressor extends CompressorBase {
                         if (err)
                             reject(err);
                         console.log(dest, " is now completed, see ", dest, "resulted in ", payload.length - source.length, "bytes less (", (100 - (source.length / payload.length) * 100).toFixed(2), "%)");
-                        resolve();
+                        resolve(true);
                     });
                 });
             });
@@ -83,7 +83,7 @@ export class Compressor extends CompressorBase {
                         }
                         let msg = `File created successfully ${dest}, ${payload.byteLength} resulted in ${result.byteLength}, ratio ${((payload.byteLength / result.byteLength) * 100).toFixed(2)}%`;
                         console.log(msg);
-                        resolve();
+                        resolve(true);
                     });
                 }).catch(err => {
                     reject(err);

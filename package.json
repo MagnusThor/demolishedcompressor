@@ -1,6 +1,6 @@
 {
   "name": "demolishedcompressor",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "demolishedcompressor pack's a javascript file into a PNG image with an HTML payload. When opened in a browser, the HTML extracts and executes the javascript.",
   "main": "index.js",
   "scripts": {
@@ -24,13 +24,11 @@
     "png",
     "pnghtml",
     "pack",
-    "shrink"
+    "shrink",
+    "jsexe",
+    "javascript demo packer"
   ],
-  "contributors": [
-    {
-      "name": "Ricky Davies",
-      "email": "rdavies@zen.co.uk"
-    }
+  "contributors": [    
   ],
   "license": "MIT",
   "dependencies": {
