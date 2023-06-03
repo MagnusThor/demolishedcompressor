@@ -9,7 +9,7 @@ export class CompressorBase {
      * @param {Buffer} payload
      * @param {string} [preHTML]
      * @param {string} [customScript]
-     * @returns {Promise<any>}
+     * @returns {Promise<Buffer>}
      * @memberof CompressorBase
      */
     static Compress(payload: Buffer, preHTML?: string, customScript?: string): Promise<Buffer> {
@@ -74,7 +74,7 @@ export class CompressorBase {
             let scanlinesBuffer = Buffer.concat(scanlines.map(function (scanline) {
                 return Buffer.concat([new Buffer([0]), scanline]);
             }));
-            let pngify = new Promise((resolve, reject) => {
+            let pngify = new Promise<Buffer>((resolve, reject) => {
                 Zlib.deflate(scanlinesBuffer, (err, buffer:Buffer) => {
                     if (err)
                         reject();
