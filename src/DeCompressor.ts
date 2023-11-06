@@ -1,4 +1,4 @@
-class U {
+class DeCompressor {
     /** unpack the data packed as a PNG image using demolishedCompressor
      *
      *
@@ -6,7 +6,7 @@ class U {
      * @param {(result: any) => {}} cb
      * @memberof Unpack
      */
-     u(i: HTMLImageElement, cb: (result: any) => {}) {
+     unpack(i: HTMLImageElement, cb: (result: any) => {}) {
         let c = document.createElement("canvas");
         c.width = i.width, c.height = i.height;
         let x = c.getContext("2d") as CanvasRenderingContext2D;
@@ -41,11 +41,11 @@ class U {
      * @param {(result: any) => {}} cb
      * @memberof Unpack
      */
-     F(file: string, cb: (result: any) => {}) {
+     loadAndUpack(file: string, cb: (result: any) => {}) {
         let l = new Image();
         l.src = file;
         l.onload = (e: any) => {
-            this.u(l, cb);
+            this.unpack(l, cb);
         }
     }
     constructor(){
@@ -54,10 +54,10 @@ class U {
      * Get a new instance of Unpacker (U)
      *
      * @static
-     * @returns {U}
+     * @returns {DeCompressor}
      * @memberof U
      */
-    static I():U{
-        return new U();
+    static getInstance():DeCompressor{
+        return new DeCompressor();
     }
 }

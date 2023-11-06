@@ -34,17 +34,16 @@ var CompressorBase = (function () {
             if (!preHTML)
                 preHTML = '';
             var getBytes = function (number, bytes) {
-                bytes = bytes || 4;
                 var result = [];
                 for (var i = 0; i < bytes; i++) {
                     result = [number % 256].concat(result);
                     number = number / 256 | 0;
                 }
-                return new Buffer(result);
+                return Buffer.from(result);
             };
             var chunk = function (type, data) {
                 var length = getBytes(data.length, 4);
-                var typeAndData = Buffer.concat([new Buffer(type, 'binary'), data]);
+                var typeAndData = Buffer.concat([Buffer.from(type, 'binary'), data]);
                 return Buffer.concat([
                     length,
                     typeAndData,
@@ -65,9 +64,9 @@ var CompressorBase = (function () {
             var height = width;
             var padding = width * height - payload.length / 3;
             while (padding-- > 0) {
-                payload = Buffer.concat([payload, new Buffer([0, 0, 0])]);
+                payload = Buffer.concat([payload, Buffer.from([0, 0, 0])]);
             }
-            var fileSignature = new Buffer('\x89\x50\x4e\x47\x0d\x0a\x1a\x0a', 'binary');
+            var fileSignature = Buffer.from('\x89\x50\x4e\x47\x0d\x0a\x1a\x0a', 'binary');
             var IHDRChunk = chunk('IHDR', Buffer.concat([
                 getBytes(width, 4),
                 getBytes(height, 4),
@@ -85,11 +84,11 @@ var CompressorBase = (function () {
                 script = "<script>".concat(customScript, "</script><canvas id=\"c\" height=\"").concat(height, "\" width=\"").concat(width, "\"></canvas><img src=# onload=z()><!--");
             }
             var html = "".concat(preHTML).concat(script);
-            var htMlChunk = chunk('htMl', new Buffer(html));
-            var IENDChunk = chunk('IEND', new Buffer(''));
+            var htMlChunk = chunk('htMl', Buffer.from(html));
+            var IENDChunk = chunk('IEND', Buffer.from(''));
             var scanlines = bufferChunk(payload, width * 3);
             var scanlinesBuffer = Buffer.concat(scanlines.map(function (scanline) {
-                return Buffer.concat([new Buffer([0]), scanline]);
+                return Buffer.concat([Buffer.from([0]), scanline]);
             }));
             var pngify = new Promise(function (resolve, reject) {
                 Zlib.deflate(scanlinesBuffer, function (err, buffer) {
@@ -109,11 +108,12 @@ var CompressorBase = (function () {
                     ]));
                 });
             });
-            pngify.then(function (result) {
-                resolve(result);
+            pngify.then(function (buf) {
+                resolve(buf);
             }).catch(function (err) { return reject(err); });
         });
     };
     return CompressorBase;
 }());
 exports.CompressorBase = CompressorBase;
+//# sourceMappingURL=CompressorBase.js.map

@@ -1,7 +1,8 @@
-var U = (function () {
-    function U() {
+"use strict";
+var DeCompressor = (function () {
+    function DeCompressor() {
     }
-    U.prototype.u = function (i, cb) {
+    DeCompressor.prototype.unpack = function (i, cb) {
         var c = document.createElement("canvas");
         c.width = i.width, c.height = i.height;
         var x = c.getContext("2d");
@@ -30,16 +31,17 @@ var U = (function () {
         };
         l(0);
     };
-    U.prototype.F = function (file, cb) {
+    DeCompressor.prototype.loadAndUpack = function (file, cb) {
         var _this = this;
         var l = new Image();
         l.src = file;
         l.onload = function (e) {
-            _this.u(l, cb);
+            _this.unpack(l, cb);
         };
     };
-    U.I = function () {
-        return new U();
+    DeCompressor.getInstance = function () {
+        return new DeCompressor();
     };
-    return U;
+    return DeCompressor;
 }());
+//# sourceMappingURL=DeCompressor.js.map

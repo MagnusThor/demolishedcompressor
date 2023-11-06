@@ -1,6 +1,6 @@
 # demolishedCompressor
 
-demolishedCompressor pack's a .js/json/text file into a PNG image with an optinal HTML payload. 
+demolishedCompressor pack's a .js/json/text file into a PNG image with an optional HTML payload. 
 
 The default behavior is when a packed file opened in a browser the HTML is extracted and the javascript executes. This option (default) is designed to pack/compress 4k, 8k and 64k demos build using Javascript into one "executable".
 
@@ -63,25 +63,15 @@ see example/compress-custom.ts for a complete example
 
 ### Create an instance of unpacker
 
-     let instance = U.I();
+     let instance = U.getInstance();
 
 ### Unpack a file     
     
-    instance.F("packedfile.png",  (result) => {
+    instance.loadAndUpack("packedfile.png",  (result) => {
        
        // deal with the unpacked result
        // i.e JSON.parse, eval etc.  
       });
-
-### TypeScript definition 
- 
-
-    declare class U {
-    u(i: HTMLImageElement, cb: (result: any) => {}): void;
-    F(file: string, cb: (result: any) => {}): void;
-    constructor();
-    static I(): U;
-    }
 
 
 ## Examples
@@ -113,37 +103,5 @@ Compile and run the script
 
     Compressor.Pngify("/tiny-efflux/rawsong.json","/tiny-efflux/tiny.png",html,false)
 
-
-Compile and run the script 
-
-## Live example's
-
-Below you find a short description of each example as well as links that lets you se the result.
-
-### Example 1
-
-This example uses demolishedPlayer (WebGL & GLSL Shader rendering engine), demolishedSynth (DSP/Procedual audio) and procedual textures created using demolishedTexture and GLSL Shader code and some custom markup. 
-
-Unpacked size 12173 bytes, packed result is 6235 without any major minification of code.
-
-https://magnusthor.github.io/demolishedcompressor/example/builds/demo.png.html
-
-
-Note , Click the canvas to start audio.
-
-
-### Example 2
-
-This example packs a song created using Efflux ( https://www.igorski.nl/application/efflux/ ) unpacks and plays the song.
-
-
-https://magnusthor.github.io/demolishedcompressor/tiny-efflux/index.html
-
-
-### Example 3
-
-TBD
-
-https://magnusthor.github.io/demolishedcompressor/example/builds/foo-mjolnir.png.html
 
 

@@ -48,7 +48,7 @@ export class Compressor extends CompressorBase {
      * @memberof Compressor
      */
     private static loadFile(fullpath: string): Promise<Buffer> {
-        console.log("Loading -      " ,fullpath);
+        console.log(`Loading-${fullpath}`);
         return new Promise((resolve, reject) => {
             fs.readFile(fullpath, (err, payload) => {
                 if (!err) {
@@ -69,9 +69,8 @@ export class Compressor extends CompressorBase {
      * @param {boolean} [customScript]
      * @memberof Compressor
      */
-    static Pngify(src: string, dest: string, preHTML?: string, customScript?: string): Promise<any> {
+    static Pngify(src: string, dest: string, preHTML?: string, customScript?: string): Promise<boolean> {
         src = path.join(process.cwd(), src);
-
         return new Promise((resolve, reject) => {
             this.loadFile(src).then(payload => {
                 this.Compress(payload, preHTML, customScript).then(result => {
@@ -81,7 +80,7 @@ export class Compressor extends CompressorBase {
                         if (err) {
                             console.log(err);
                         }
-                        let msg = `File created successfully ${dest}, ${payload.byteLength} resulted in ${result.byteLength}, ratio ${((payload.byteLength / result.byteLength) * 100).toFixed(2)}%`;
+                        const msg = `File created successfully ${dest}, ${payload.byteLength} resulted in ${result.byteLength}, ratio ${((payload.byteLength / result.byteLength) * 100).toFixed(2)}%`;
                         console.log(msg);
                         resolve(true);
                     });

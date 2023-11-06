@@ -53,7 +53,7 @@ var Compressor = (function (_super) {
                 var o = JSON.parse(hash.toString());
                 fs.readFile(path.join(process.cwd(), src), function (err, payload) {
                     if (err)
-                        reject(err);
+                        reject(false);
                     var source = payload.toString();
                     Object.keys(o).forEach(function (key) {
                         var s = "." + o[key] + "(";
@@ -66,14 +66,14 @@ var Compressor = (function (_super) {
                         if (err)
                             reject(err);
                         console.log(dest, " is now completed, see ", dest, "resulted in ", payload.length - source.length, "bytes less (", (100 - (source.length / payload.length) * 100).toFixed(2), "%)");
-                        resolve();
+                        resolve(true);
                     });
                 });
             });
         });
     };
     Compressor.loadFile = function (fullpath) {
-        console.log("Loading -      ", fullpath);
+        console.log("Loading-".concat(fullpath));
         return new Promise(function (resolve, reject) {
             fs.readFile(fullpath, function (err, payload) {
                 if (!err) {
@@ -97,7 +97,7 @@ var Compressor = (function (_super) {
                         }
                         var msg = "File created successfully ".concat(dest, ", ").concat(payload.byteLength, " resulted in ").concat(result.byteLength, ", ratio ").concat(((payload.byteLength / result.byteLength) * 100).toFixed(2), "%");
                         console.log(msg);
-                        resolve();
+                        resolve(true);
                     });
                 }).catch(function (err) {
                     reject(err);
@@ -108,3 +108,4 @@ var Compressor = (function (_super) {
     return Compressor;
 }(CompressorBase_1.CompressorBase));
 exports.Compressor = Compressor;
+//# sourceMappingURL=Compressor.js.map

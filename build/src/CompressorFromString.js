@@ -25,7 +25,7 @@ var CompressString = (function (_super) {
     CompressString.Pngify = function (src, preHTML, customScript) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var buffer = new Buffer(src);
+            var buffer = Buffer.from(src);
             _this.Compress(buffer, preHTML, customScript).then(function (result) {
                 resolve(result);
             });
@@ -34,3 +34,4 @@ var CompressString = (function (_super) {
     return CompressString;
 }(CompressorBase_1.CompressorBase));
 exports.CompressString = CompressString;
+//# sourceMappingURL=CompressorFromString.js.map

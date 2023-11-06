@@ -3,7 +3,7 @@ import * as Zlib from 'zlib';
 export class CompressorBase {
     
     /**
-     * Compress data append HTML and unpacked
+     * Compress data append HTML and decompressor
      *
      * @static
      * @param {Buffer} payload
@@ -16,18 +16,17 @@ export class CompressorBase {
         return new Promise((resolve, reject) => {
             if (!preHTML)
                 preHTML = '';
-            const getBytes = (number: number, bytes: any) => {
-                bytes = bytes || 4;
-                let result: any[] | never[] | number[] | Array<number> = [];
+            const getBytes = (number: number, bytes: number) => {
+                let result: Array<number> = [];
                 for (let i = 0; i < bytes; i++) {
                     result = [number % 256].concat(result);
                     number = number / 256 | 0;
                 }
-                return new Buffer(result);
+                return Buffer.from(result);
             };
             const chunk = (type: string, data: Buffer) => {
                 let length = getBytes(data.length, 4);
-                let typeAndData = Buffer.concat([new Buffer(type, 'binary'), data]);
+                let typeAndData = Buffer.concat([Buffer.from(type, 'binary'), data]);
                 return Buffer.concat([
                     length,
                     typeAndData,
@@ -48,9 +47,9 @@ export class CompressorBase {
             let height = width;
             let padding = width * height - payload.length / 3;
             while (padding-- > 0) {
-                payload = Buffer.concat([payload, new Buffer([0, 0, 0])]);
+                payload = Buffer.concat([payload,  Buffer.from([0, 0, 0])]);
             }
-            let fileSignature = new Buffer('\x89\x50\x4e\x47\x0d\x0a\x1a\x0a', 'binary');
+            let fileSignature =  Buffer.from('\x89\x50\x4e\x47\x0d\x0a\x1a\x0a', 'binary');
             let IHDRChunk = chunk('IHDR', Buffer.concat([
                 getBytes(width, 4),
                 getBytes(height, 4),
@@ -68,13 +67,13 @@ export class CompressorBase {
                 script = `<script>${customScript}</script><canvas id="c" height="${height}" width="${width}"></canvas><img src=# onload=z()><!--`;
             }
             let html = `${preHTML}${script}`;
-            let htMlChunk = chunk('htMl', new Buffer(html));
-            let IENDChunk = chunk('IEND', new Buffer(''));
+            let htMlChunk = chunk('htMl', Buffer.from(html));
+            let IENDChunk = chunk('IEND', Buffer.from(''));
             let scanlines = bufferChunk(payload, width * 3);
             let scanlinesBuffer = Buffer.concat(scanlines.map(function (scanline) {
-                return Buffer.concat([new Buffer([0]), scanline]);
+                return Buffer.concat([Buffer.from([0]), scanline]);
             }));
-            let pngify = new Promise((resolve, reject) => {
+            let pngify = new Promise<Buffer>((resolve, reject) => {
                 Zlib.deflate(scanlinesBuffer, (err, buffer:Buffer) => {
                     if (err)
                         reject();
@@ -92,8 +91,8 @@ export class CompressorBase {
                     ]));
                 });
             });
-            pngify.then( (result:Buffer) => {
-                resolve(result);
+            pngify.then( (buf:Buffer) => {
+                resolve(buf);
             }).catch(err => reject(err));
         });
     }
