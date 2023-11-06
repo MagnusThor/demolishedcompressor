@@ -1,0 +1,1 @@
+{"version":3,"file":"CompressorFromString.d.ts","sourceRoot":"","sources":["../../src/CompressorFromString.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAC;AAClD,qBAAa,cAAe,SAAQ,cAAc;IAC9C,MAAM,CAAC,MAAM,CAAC,GAAG,EAAE,MAAM,EAAC,OAAO,CAAC,EAAE,MAAM,EAAE,YAAY,CAAC,EAAE,MAAM,GAAG,OAAO,CAAC,GAAG,CAAC;CASnF"}
