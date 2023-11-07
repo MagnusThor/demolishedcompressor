@@ -1,3 +1,3 @@
 
-export {Compressor} from "./build/src/Compressor";
-export {CompressString} from "./build/src/CompressorFromString";
+export {Compressor} from "./src/Compressor";
+export {CompressString} from "./src/CompressorFromString";
